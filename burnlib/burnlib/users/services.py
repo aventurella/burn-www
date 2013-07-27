@@ -14,5 +14,5 @@ class UserService(Service):
     def user_for_id(self, user_id):
         return self.driver.user_for_id(user_id)
 
-    def user_for_blitz_id(self, game_center_id):
+    def user_for_game_center_id(self, game_center_id):
         return self.driver.user_for_game_center_id(game_center_id)
