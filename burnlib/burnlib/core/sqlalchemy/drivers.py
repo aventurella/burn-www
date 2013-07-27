@@ -1,4 +1,4 @@
-from .base import Driver
+from burnlib.core.drivers import Driver
 
 
 class SqlAlchemyDriver(Driver):

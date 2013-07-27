@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.orm import joinedload, contains_eager
 from burnlib.core.exceptions import ResourceNotFound
 from burnlib.users.models import User, UserExtra
-from burnlib.core.drivers.sqlalchemy import SqlAlchemyDriver
+from burnlib.core.sqlalchemy.drivers import SqlAlchemyDriver
 
 
 log = logging.getLogger(__name__)
