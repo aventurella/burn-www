@@ -23,8 +23,9 @@ class FriendsController(Controller):
         data = self.request.json_body
         alias = self.request.matchdict['alias']
 
-        log.debug('Received data %s', data)
+
         log.info('Registered friends \'%s\' for \'%s\'', data['friends'], alias)
+        log.debug('Received data %s', data)
         print(data['csrf_token'])
         print(self.request.session.get_csrf_token())
 

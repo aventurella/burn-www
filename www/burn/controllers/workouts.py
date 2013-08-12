@@ -21,8 +21,9 @@ class WorkoutsController(Controller):
 
         data = self.request.json_body
         alias = self.request.matchdict['alias']
-        log.debug('Received data %s', data)
+
         log.info('Creating workout \'%s\' for \'%s\'', data['label'], alias)
+        log.debug('Received data %s', data)
 
         #print(data['csrf_token'])
         #print(self.request.session.get_csrf_token())

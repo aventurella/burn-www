@@ -23,10 +23,10 @@ class AuthenticationController(Controller):
         # }
 
         data = self.request.json_body
-        log.debug('Received data %s', data)
         log.info('Authenticating \'%s\' with Game Center Id \'%s\'',
             data['alias'],
             data['player_id'])
+        log.debug('Received data %s', data)
 
         token = self.request.session.get_csrf_token()
         return {'ok': True, 'data': {'token': token}}
