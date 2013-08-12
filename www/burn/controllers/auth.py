@@ -1,5 +1,9 @@
+import logging
 from .base import view_config
 from .base import Controller
+
+
+log = logging.getLogger(__name__)
 
 
 class AuthenticationController(Controller):
@@ -18,5 +22,11 @@ class AuthenticationController(Controller):
         #  u'notification_token': u'f420...' # 63 chars
         # }
 
+        data = self.request.json_body
+        log.debug('Received data %s', data)
+        log.info('Authenticating \'%s\' with Game Center Id \'%s\'',
+            data['alias'],
+            data['player_id'])
+
         token = self.request.session.get_csrf_token()
-        return {'ok': True, 'data': {'token':token, 'user_id':1}}
+        return {'ok': True, 'data': {'token': token}}
