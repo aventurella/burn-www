@@ -13,16 +13,8 @@ class WorkoutsController(Controller):
         request_method='GET',
         renderer='json')
     def workouts(self):
-        # input:
-        # {
-        #  u'csrf_token': u'b5101730458fc89d817f3e6f8498702ae1e4efed',
-        #  u'friends': [u'G:1549014314']
-        # }
-        print('CSRF!', self.request.headers.get('x-csrf-token'))
         alias = self.request.matchdict['alias']
         log.info('Retrieving workouts for \'%s\'', alias)
-        #print(data['csrf_token'])
-        #print(self.request.session.get_csrf_token())
 
         return {'ok': True, 'data': [
             {'label': 'Backyard Workout', 'id': 1},
@@ -38,10 +30,7 @@ class WorkoutsController(Controller):
         renderer='json')
     def create_workout(self):
         # input:
-        # {
-        #  u'csrf_token': u'b5101730458fc89d817f3e6f8498702ae1e4efed',
-        #  u'friends': [u'G:1549014314']
-        # }
+        # {u'label': u'New'}
 
         data = self.request.json_body
         alias = self.request.matchdict['alias']
@@ -52,4 +41,4 @@ class WorkoutsController(Controller):
         #print(data['csrf_token'])
         #print(self.request.session.get_csrf_token())
 
-        return {'ok': True, 'data': {'label': 'Workout Name', 'id': 1}}
+        return {'ok': True, 'data': {'label': data['label'], 'id': 2}}
