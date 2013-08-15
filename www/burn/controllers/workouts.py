@@ -10,6 +10,30 @@ class WorkoutsController(Controller):
 
     @view_config(
         route_name='workouts',
+        request_method='GET',
+        renderer='json')
+    def workouts(self):
+        # input:
+        # {
+        #  u'csrf_token': u'b5101730458fc89d817f3e6f8498702ae1e4efed',
+        #  u'friends': [u'G:1549014314']
+        # }
+        print('CSRF!', self.request.headers.get('x-csrf-token'))
+        alias = self.request.matchdict['alias']
+        log.info('Retrieving workouts for \'%s\'', alias)
+        #print(data['csrf_token'])
+        #print(self.request.session.get_csrf_token())
+
+        return {'ok': True, 'data': [
+            {'label': 'Backyard Workout', 'id': 1},
+            {'label': 'Beach Workout', 'id': 2},
+            {'label': 'Zombie Workout', 'id': 3},
+            {'label': 'Drinking Beer Workout', 'id': 4},
+            {'label': 'Being Fat Workout', 'id': 5}]
+        }
+
+    @view_config(
+        route_name='workouts',
         request_method='POST',
         renderer='json')
     def create_workout(self):
