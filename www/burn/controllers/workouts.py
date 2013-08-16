@@ -38,7 +38,22 @@ class WorkoutsController(Controller):
         log.info('Creating workout \'%s\' for \'%s\'', data['label'], alias)
         log.debug('Received data %s', data)
 
-        #print(data['csrf_token'])
-        #print(self.request.session.get_csrf_token())
-
         return {'ok': True, 'data': {'label': data['label'], 'id': 2}}
+
+    @view_config(
+        route_name='workouts.start',
+        request_method='POST',
+        renderer='json')
+    def start_workout(self):
+        # input:
+        # {u'start_time': u'2013-08-16T03:15:30.600Z'}
+
+        data = self.request.json_body
+        alias = self.request.matchdict['alias']
+        workout_id = self.request.matchdict['workout_id']
+
+        log.info('Starting workout \'%s\' for \'%s\' @ \'%s\'',
+            workout_id, alias, data['start_time'])
+        log.debug('Received data %s', data)
+
+        return {'ok': True}
