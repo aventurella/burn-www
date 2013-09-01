@@ -7,10 +7,10 @@ from sqlalchemy import engine_from_config
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 from burnlib.users.models import User
-from burnlib.users.models import UserExtra
+from burnlib.users.models import GameCenterUser
 
 from .tables import (
-    user, user_extra, metadata
+    user, game_center_user, metadata
 
 )
 
@@ -40,14 +40,13 @@ def sqlalchemy_map_models():
     without having making out models look like declarative base models.
     '''
 
-    # http://docs.sqlalchemy.org/en/rel_0_8/orm/collections.html#passive-deletes
-    mapper(User, user, properties={
-        'extras': relationship(
-            UserExtra,
+    mapper(GameCenterUser, game_center_user, properties={
+        'user': relationship(
+            User,
             cascade='all, delete-orphan',
             passive_deletes=True,
             uselist=False,
-            backref='user')
+            backref='game_center')
         })
 
-    mapper(UserExtra, user_extra)
+    mapper(User, user)

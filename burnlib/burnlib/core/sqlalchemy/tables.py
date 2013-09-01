@@ -26,7 +26,7 @@ id | email         | first_name | last_name        | password
 
 user = Table('user', metadata,
     Column('id', Integer, primary_key=True),
-    Column('username', String(60), index=True, unique=True),
+
 )
 
 '''
@@ -36,11 +36,12 @@ id | blitz_id
 1  | <hex>
 2  | <hex>
 '''
-user_extra = Table('user_extra', metadata,
+game_center_user = Table('game_center_user', metadata,
     Column('id', Integer,
             ForeignKey('user.id', ondelete='CASCADE', onupdate='CASCADE'),
             primary_key=True),
 
+    Column('username', String(60), index=True, unique=True),
     Column('game_center_id', String, index=True, unique=True, nullable=True),
-    Column('ios_push_notification_id', String, index=True, unique=True, nullable=True),
+    Column('push_notification_token', String, index=True, unique=True, nullable=True),
 )

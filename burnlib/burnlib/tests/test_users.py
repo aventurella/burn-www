@@ -1,17 +1,18 @@
 import unittest
 from burnlib.core.exceptions import ResourceNotFound
-from burnlib.users.models import User, UserExtra
+from burnlib.users.models import User, GameCenterUser
+from .base import SqlAlchemyTest
 #from .ioc import build_container
 
 
-class TestUserService(unittest.TestCase):
+class TestUserService(SqlAlchemyTest):
 
     def setUp(self):
-        #self.ioc = build_container()
+        self.ioc = build_container()
         pass
 
     def test_create_user(self):
-        extras = UserExtra()
+        gc_user = GameCenterUser()
         extras.blitz_id = 'afde4b5c'
 
         u1 = User()
