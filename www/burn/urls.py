@@ -2,6 +2,7 @@ def includeme(config):
     config.add_route('auth.gamecenter', '/authenticate/gamecenter')
     config.add_route('friends.register', '/{alias}/friends')
     config.add_route('workouts', '/{alias}/workouts')
+    config.add_route('workouts.detail', '/{alias}/workouts/{workout_id:base|[0-9]+}')
     config.add_route('workouts.begin', '/{alias}/workouts/history')
     config.add_route('workouts.end', '/{alias}/workouts/history/{record_id}')
 

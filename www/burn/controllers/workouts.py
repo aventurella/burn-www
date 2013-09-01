@@ -41,6 +41,26 @@ class WorkoutsController(Controller):
         return {'ok': True, 'data': {'label': data['label'], 'id': 2}}
 
     @view_config(
+        route_name='workouts.detail',
+        request_method='PUT',
+        renderer='json')
+    def update_workout(self):
+        # input:
+        # {u'players': [u'G:1549014314']}
+        # workout_id will be 'base' or an actual workout_id.
+
+        data = self.request.json_body
+        log.debug('Received data %s', data)
+
+        alias = self.request.matchdict['alias']
+        workout_id = self.request.matchdict['workout_id']
+
+        log.info('Updating workout \'%s\' for \'%s\' @ \'%s\'',
+            workout_id, alias, data)
+
+        return {'ok': True}
+
+    @view_config(
         route_name='workouts.begin',
         request_method='POST',
         renderer='json')
