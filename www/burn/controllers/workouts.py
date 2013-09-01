@@ -41,19 +41,39 @@ class WorkoutsController(Controller):
         return {'ok': True, 'data': {'label': data['label'], 'id': 2}}
 
     @view_config(
-        route_name='workouts.start',
+        route_name='workouts.begin',
         request_method='POST',
         renderer='json')
-    def start_workout(self):
+    def begin_workout(self):
         # input:
-        # {u'start_time': u'2013-08-16T03:15:30.600Z'}
+        # {u'start_date': u'2013-09-01T03:53:22.800Z', u'workout_id': u'1'}
 
         data = self.request.json_body
+        log.debug('Received data %s', data)
+
         alias = self.request.matchdict['alias']
-        workout_id = self.request.matchdict['workout_id']
+        workout_id = data['workout_id']
 
         log.info('Starting workout \'%s\' for \'%s\' @ \'%s\'',
-            workout_id, alias, data['start_time'])
+            workout_id, alias, data['start_date'])
+
+        return {'ok': True, 'data': {'id': 2}}
+
+    @view_config(
+        route_name='workouts.end',
+        request_method='PUT',
+        renderer='json')
+    def end_workout(self):
+        # input:
+        # {u'end_date': u'2013-09-01T03:54:06.694Z'}
+
+        data = self.request.json_body
         log.debug('Received data %s', data)
+
+        alias = self.request.matchdict['alias']
+        record_id = self.request.matchdict['record_id']
+
+        log.info('Stopping workout \'%s\' for \'%s\' @ \'%s\'',
+            record_id, alias, data['end_date'])
 
         return {'ok': True}
