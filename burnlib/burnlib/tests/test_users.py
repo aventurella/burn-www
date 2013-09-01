@@ -1,15 +1,9 @@
-import unittest
 from burnlib.core.exceptions import ResourceNotFound
 from burnlib.users.models import User, GameCenterUser
 from .base import SqlAlchemyTest
-#from .ioc import build_container
 
 
 class TestUserService(SqlAlchemyTest):
-
-    def setUp(self):
-        self.ioc = build_container()
-        pass
 
     def test_create_user(self):
         gc_user = GameCenterUser()

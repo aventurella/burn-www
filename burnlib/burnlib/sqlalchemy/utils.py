@@ -20,11 +20,6 @@ def sqlalchemy_session_factory(config, **kwargs):
     return sessionmaker(bind=engine)
 
 
-def sqlalchemy_scoped_session_factory(config):
-    engine = engine_from_config(config)
-    return scoped_session(sessionmaker(bind=engine))
-
-
 def sqlalchemy_create_tables(params):
     engine = create_engine(params['sqlalchemy.url'], poolclass=NullPool)
     metadata.create_all(engine)
