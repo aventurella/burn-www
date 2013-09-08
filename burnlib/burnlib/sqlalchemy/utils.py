@@ -3,7 +3,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm import mapper
 from sqlalchemy import create_engine
 from sqlalchemy import engine_from_config
+from sqlalchemy.orm import backref
 from sqlalchemy.orm import sessionmaker
+
 from sqlalchemy.pool import NullPool
 from burnlib.users.models import User
 from burnlib.users.models import GameCenterUser
@@ -31,14 +33,14 @@ def sqlalchemy_map_models():
     may change as needs arise. In that case, we reap the benefits of SQLAlchemy
     without having making out models look like declarative base models.
     '''
-
+    mapper(User, user)
     mapper(GameCenterUser, game_center_user, properties={
         'user': relationship(
             User,
-            cascade='all, delete-orphan',
-            passive_deletes=True,
+            cascade='all',
+            # passive_deletes=True,
             uselist=False,
-            backref='game_center')
+            backref=backref('game_center', lazy='joined', uselist=False))
         })
 
-    mapper(User, user)
+

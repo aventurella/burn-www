@@ -25,7 +25,7 @@ id | email         | first_name | last_name        | password
 '''
 
 user = Table('user', metadata,
-    Column('id', Integer, primary_key=True),
+    Column('id', Integer, primary_key=True)
 
 )
 
