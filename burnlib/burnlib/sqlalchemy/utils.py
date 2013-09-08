@@ -1,6 +1,5 @@
 from __future__ import absolute_import
 from sqlalchemy.orm import relationship
-from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import mapper
 from sqlalchemy import create_engine
 from sqlalchemy import engine_from_config
@@ -8,10 +7,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 from burnlib.users.models import User
 from burnlib.users.models import GameCenterUser
-
 from .tables import (
-    user, game_center_user, metadata
-
+    user, game_center_user
 )
 
 
@@ -20,7 +17,7 @@ def sqlalchemy_session_factory(config, **kwargs):
     return sessionmaker(bind=engine)
 
 
-def sqlalchemy_create_tables(params):
+def sqlalchemy_create_tables(params, metadata):
     engine = create_engine(params['sqlalchemy.url'], poolclass=NullPool)
     metadata.create_all(engine)
 
