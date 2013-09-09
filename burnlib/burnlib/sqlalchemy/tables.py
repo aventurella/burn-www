@@ -26,7 +26,6 @@ id | email         | first_name | last_name        | password
 
 user = Table('user', metadata,
     Column('id', Integer, primary_key=True)
-
 )
 
 '''
@@ -44,4 +43,10 @@ game_center_user = Table('game_center_user', metadata,
     Column('username', String(60), index=True, unique=True),
     Column('game_center_id', String, index=True, unique=True, nullable=True),
     Column('push_notification_token', String, index=True, unique=True, nullable=True),
+)
+
+workout = Table('workout', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('label', String(100), nullable=False),
+    Column('user_id', Integer, ForeignKey('user.id', ondelete='CASCADE'), index=True, nullable=False),
 )

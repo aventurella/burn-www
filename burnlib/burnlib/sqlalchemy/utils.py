@@ -7,10 +7,11 @@ from sqlalchemy.orm import backref
 from sqlalchemy.orm import sessionmaker
 
 from sqlalchemy.pool import NullPool
+from burnlib.workouts.models import Workout
 from burnlib.users.models import User
 from burnlib.users.models import GameCenterUser
 from .tables import (
-    user, game_center_user
+    user, game_center_user, workout
 )
 
 
@@ -41,6 +42,13 @@ def sqlalchemy_map_models():
             # passive_deletes=True,
             uselist=False,
             backref=backref('game_center', lazy='joined', uselist=False))
+        })
+
+    mapper(Workout, workout, properties={
+        'user': relationship(
+            User,
+            cascade='all',
+            uselist=False)
         })
 
 

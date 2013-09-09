@@ -1,4 +1,5 @@
 import logging
+from sqlalchemy.orm import joinedload
 from burnlib.core.exceptions import ResourceNotFound
 from burnlib.users.models import (User, GameCenterUser)
 from .base import SqlAlchemyDriver
@@ -37,6 +38,7 @@ class GameCenterUserDriver(SqlAlchemyDriver):
 
         try:
             result = session.query(GameCenterUser)\
+                            .options(joinedload(GameCenterUser.user)) \
                             .filter(GameCenterUser.username == username)\
                             .one()
         except Exception as e:
@@ -51,6 +53,7 @@ class GameCenterUserDriver(SqlAlchemyDriver):
 
         try:
             result = session.query(GameCenterUser)\
+                            .options(joinedload(GameCenterUser.user)) \
                             .filter(GameCenterUser.game_center_id == game_center_id)\
                             .one()
         except Exception as e:

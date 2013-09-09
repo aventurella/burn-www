@@ -12,5 +12,6 @@ class GameCenterUser(Model):
         self.user = None
         self.game_center_id = None
         self.push_notification_token = None
+        self.user = None
 
 
