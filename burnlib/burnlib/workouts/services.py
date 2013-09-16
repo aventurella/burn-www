@@ -11,5 +11,8 @@ class WorkoutService(Service):
     def create_workout(self, workout):
         self.driver.create_workout(workout)
 
+    def update_workout(self, workout):
+        self.driver.update_workout(workout)
+
     def delete_workout(self, workout):
         self.driver.delete_workout(workout)

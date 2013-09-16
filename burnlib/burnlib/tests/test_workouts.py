@@ -1,5 +1,5 @@
 from burnlib.core.exceptions import ResourceNotFound
-from burnlib.users.models import User
+from burnlib.users.models import User, GameCenterUser
 from burnlib.workouts.models import Workout
 from .base import SqlAlchemyTest
 
@@ -126,3 +126,61 @@ class TestWorkoutService(SqlAlchemyTest):
             ResourceNotFound,
             workouts.workout_for_id,
             w1.id)
+
+    def test_add_workout_players(self):
+        workouts = self.ioc.WorkoutService()
+        gc_users = self.ioc.GameCenterUserService()
+
+        u1 = GameCenterUser()
+        u1.username = 'clarkonaut'
+        u1.game_center_id = 'g:12345',
+        u1.push_notification_token = 'abcdef'
+        u1.user = User()
+
+        u2 = GameCenterUser()
+        u2.username = 'lucynaut'
+        u2.game_center_id = 'g:54321',
+        u2.push_notification_token = 'xyz'
+        u2.user = User()
+
+        u3 = GameCenterUser()
+        u3.username = 'ollienaut'
+        u3.game_center_id = 'g:67890',
+        u3.push_notification_token = 'abxyz'
+        u3.user = User()
+
+        gc_users.create_user(u1)
+        gc_users.create_user(u2)
+        gc_users.create_user(u3)
+
+        w1 = Workout()
+        w1.label = 'Test'
+        w1.user = u1.user
+
+        w2 = Workout()
+        w2.label = 'Test2'
+        w2.user = u2.user
+
+        workouts.create_workout(w1)
+        workouts.create_workout(w2)
+
+        w1.game_center_players.append(u2)
+        w1.game_center_players.append(u3)
+
+        w2.game_center_players.append(u1)
+        w2.game_center_players.append(u3)
+
+        w3 = workouts.workout_for_id(w1.id)
+        players = w3.game_center_players
+
+        self.assertTrue(len(players) == 2)
+        self.assertTrue(players[0].username == u2.username)
+        self.assertTrue(players[1].username == u3.username)
+
+        w4 = workouts.workout_for_id(w2.id)
+        players = w4.game_center_players
+
+        self.assertTrue(len(players) == 2)
+        self.assertTrue(players[0].username == u1.username)
+        self.assertTrue(players[1].username == u3.username)
+

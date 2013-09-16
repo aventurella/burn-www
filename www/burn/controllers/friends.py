@@ -22,4 +22,8 @@ class FriendsController(Controller):
         log.info('Registered friends \'%s\' for \'%s\'', data['friends'], alias)
         log.debug('Received data %s', data)
 
+        # user.friends = {
+        #     'G:1549014314': None
+        # }
+
         return {'ok': True}

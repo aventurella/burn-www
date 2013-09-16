@@ -48,6 +48,7 @@ class WorkoutsController(Controller):
         # input:
         # {u'players': [u'G:1549014314']}
         # workout_id will be 'base' or an actual workout_id.
+        # adding freinds to workout or "base" workout
 
         data = self.request.json_body
         log.debug('Received data %s', data)
@@ -57,6 +58,33 @@ class WorkoutsController(Controller):
 
         log.info('Updating workout \'%s\' for \'%s\' @ \'%s\'',
             workout_id, alias, data)
+
+        if workout_id == 'base':
+            pass
+
+        return {'ok': True}
+
+    @view_config(
+        route_name='workouts.detail',
+        request_method='GET',
+        renderer='json')
+    def get_workout(self):
+        # input:
+        # {u'players': [u'G:1549014314']}
+        # workout_id will be 'base' or an actual workout_id.
+        # adding freinds to workout or "base" workout
+
+        data = self.request.json_body
+        log.debug('Received data %s', data)
+
+        alias = self.request.matchdict['alias']
+        workout_id = self.request.matchdict['workout_id']
+
+        log.info('Updating workout \'%s\' for \'%s\' @ \'%s\'',
+            workout_id, alias, data)
+
+        if workout_id == 'base':
+            pass
 
         return {'ok': True}
 

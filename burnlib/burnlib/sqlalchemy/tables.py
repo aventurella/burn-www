@@ -50,3 +50,18 @@ workout = Table('workout', metadata,
     Column('label', String(100), nullable=False),
     Column('user_id', Integer, ForeignKey('user.id', ondelete='CASCADE'), index=True, nullable=False),
 )
+
+
+workout_player = Table('workout_player', metadata,
+    Column('workout_id', Integer,
+            ForeignKey('workout.id', ondelete='CASCADE'),
+            primary_key=True),
+
+    Column('game_center_id', String,
+           ForeignKey('game_center_user.game_center_id', ondelete='CASCADE'),
+           primary_key=True)
+
+    # we are assuming for now that everyone is a game center user. There would need
+    # to be some addtional information here, like "kind" in order to distinguish
+    # users from different phone platforms if it ever grows beyond iOS
+)

@@ -5,13 +5,15 @@ from sqlalchemy import create_engine
 from sqlalchemy import engine_from_config
 from sqlalchemy.orm import backref
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.associationproxy import association_proxy
 
 from sqlalchemy.pool import NullPool
-from burnlib.workouts.models import Workout
+from sqlalchemy.sql import and_
+from burnlib.workouts.models import Workout, WorkoutPlayer
 from burnlib.users.models import User
 from burnlib.users.models import GameCenterUser
 from .tables import (
-    user, game_center_user, workout
+    user, game_center_user, workout, workout_player
 )
 
 
@@ -44,11 +46,24 @@ def sqlalchemy_map_models():
             backref=backref('game_center', lazy='joined', uselist=False))
         })
 
+    setattr(Workout, 'game_center_players', association_proxy('workout_players', 'game_center_player'))
+
     mapper(Workout, workout, properties={
         'user': relationship(
             User,
             cascade='all',
             uselist=False)
         })
+
+    mapper(WorkoutPlayer, workout_player, properties={
+        'workout': relationship(Workout, uselist=False,
+            backref=backref('workout_players',
+                             cascade='all, delete-orphan')),
+
+        'game_center_player': relationship(
+            GameCenterUser,
+            primaryjoin=workout_player.c.game_center_id == GameCenterUser.game_center_id)
+        })
+
 
 

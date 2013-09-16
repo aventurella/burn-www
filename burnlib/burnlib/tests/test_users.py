@@ -124,3 +124,17 @@ class TestGameCenterUserService(SqlAlchemyTest):
             ResourceNotFound,
             gc_users.user_for_game_center_id,
             u1.game_center_id)
+
+    # def test_register_freinds(self):
+    #     gc_users = self.ioc.GameCenterUserService()
+
+    #     u1 = GameCenterUser()
+    #     u1.username = 'clarkonaut'
+    #     u1.game_center_id = 'g:12345',
+    #     u1.push_notification_token = 'abcdef'
+    #     u1.user = User()
+
+    #     gc_users.create_user(u1)
+
+    #     u1.freinds =
+    #     # G:1549014314
